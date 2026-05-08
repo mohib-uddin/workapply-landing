@@ -1,0 +1,86 @@
+@import url("https://fonts.googleapis.com/css2?family=Pavanam&display=swap");
+
+:root {
+  --font-sans: "Pavanam", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Pavanam", ui-sans-serif, system-ui, sans-serif;
+  --text-body: 1rem;
+  --text-body-sm: 0.875rem;
+  --text-lead: 1.125rem;
+  --text-h3: 1.25rem;
+  --text-h2: clamp(1.5rem, 2.5vw, 2.5rem);
+  --text-h1: clamp(2rem, 4vw, 3.25rem);
+  --leading-tight: 1.2;
+  --leading-body: 1.5;
+  --leading-relaxed: 1.6;
+}
+
+body,
+button,
+input,
+textarea,
+select {
+  font-family: var(--font-sans);
+}
+
+.landing-root {
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  font-weight: 400;
+  line-height: var(--leading-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.landing-root *,
+.landing-root *::before,
+.landing-root *::after {
+  font-family: var(--font-sans) !important;
+}
+
+.landing-root [data-name="h1.framer-text"] p,
+.landing-root [data-name="h1.framer-text"] .leading-\[52px\] {
+  font-family: var(--font-display) !important;
+  font-weight: 400 !important;
+  letter-spacing: -0.01em !important;
+  line-height: var(--leading-tight) !important;
+}
+
+.landing-root [data-name="h2.framer-text"] p,
+.landing-root [data-name="h2.framer-text"] div {
+  font-family: var(--font-display) !important;
+  font-weight: 400 !important;
+  letter-spacing: -0.01em !important;
+}
+
+.landing-root [data-name="h3.framer-text"] p,
+.landing-root [data-name="h3.framer-text"] div {
+  font-family: var(--font-display) !important;
+  font-weight: 400 !important;
+  letter-spacing: -0.008em !important;
+  line-height: var(--leading-tight) !important;
+}
+
+.landing-root [data-name="p.framer-text"] p,
+.landing-root [data-name="p.framer-text"] div {
+  font-family: var(--font-sans) !important;
+  font-weight: 400 !important;
+  line-height: var(--leading-body) !important;
+}
+
+.landing-root [data-name="Steps"] p {
+  font-family: var(--font-sans) !important;
+  font-weight: 400 !important;
+  letter-spacing: 0 !important;
+}
+
+.landing-root .process-tab-panel .process-tab-line1,
+.landing-root .process-tab-panel .process-tab-line2 {
+  font-family: var(--font-sans) !important;
+}
+
+.landing-root [data-name="Nav Bar"] p,
+.landing-root [data-name="Get Started"] p {
+  font-family: var(--font-sans) !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.01em !important;
+}

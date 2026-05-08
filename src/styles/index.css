@@ -1,0 +1,1230 @@
+@import './fonts.css';
+@import './tailwind.css';
+@import './theme.css';
+
+/* ------------------------------------------------------------------ */
+/* Base                                                                */
+/* ------------------------------------------------------------------ */
+
+html {
+  overflow-x: hidden;
+  overscroll-behavior-x: none;
+  overscroll-behavior-y: auto;
+  scroll-behavior: auto;
+}
+
+body {
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.landing-root {
+  touch-action: pan-y;
+  background: #0a0a0c;
+}
+
+/* ------------------------------------------------------------------ */
+/* Hero                                                                */
+/* ------------------------------------------------------------------ */
+
+.landing-hero {
+  min-height: 92svh;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+}
+
+.landing-hero .hero-content {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 170px 20px 60px;
+  box-sizing: border-box;
+}
+
+@media (min-width: 640px) {
+  .landing-hero .hero-content {
+    padding: 200px 32px 70px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .landing-hero .hero-content {
+    padding: 220px 48px 80px;
+  }
+}
+
+.landing-hero .hero-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+@media (min-width: 900px) {
+  .landing-hero .hero-grid {
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 32px;
+  }
+  .landing-hero .hero-left {
+    flex: 0 1 58%;
+    max-width: 58%;
+  }
+  .landing-hero .hero-right {
+    flex: 0 1 38%;
+    max-width: 420px;
+    margin-left: auto;
+    margin-bottom: 8px;
+  }
+}
+
+.landing-hero .hero-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.landing-hero .hero-heading {
+  font-size: 44px;
+  line-height: 1.05;
+  letter-spacing: -0.012em;
+  max-width: 18ch;
+  margin: 0;
+}
+
+@media (min-width: 640px) {
+  .landing-hero .hero-heading {
+    font-size: 48px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .landing-hero .hero-heading {
+    font-size: 52px;
+  }
+}
+
+.landing-hero .hero-cta {
+  margin-top: 28px;
+  padding: 10px 20px 10px 24px;
+  font-size: 28px;
+  line-height: 1;
+}
+
+@media (min-width: 640px) {
+  .landing-hero .hero-cta {
+    font-size: 32px;
+  }
+}
+
+.landing-hero .hero-caption {
+  margin: 20px 0 0;
+  font-size: 14px;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+}
+
+@media (min-width: 640px) {
+  .landing-hero .hero-caption {
+    font-size: 15px;
+  }
+}
+
+.landing-hero .hero-right {
+  display: flex;
+  flex-direction: column;
+}
+
+.landing-hero .hero-divider {
+  height: 1px;
+  width: 100%;
+  background: rgba(250, 249, 246, 0.65);
+  margin-bottom: 20px;
+}
+
+.landing-hero .hero-subheading {
+  font-size: 18px;
+  line-height: 1.25;
+  letter-spacing: -0.005em;
+  margin: 0;
+}
+
+@media (min-width: 640px) {
+  .landing-hero .hero-subheading {
+    font-size: 20px;
+  }
+}
+
+.landing-hero .hero-description {
+  margin: 12px 0 0;
+  font-size: 14px;
+  line-height: 1.55;
+  letter-spacing: 0.01em;
+}
+
+@media (min-width: 640px) {
+  .landing-hero .hero-description {
+    font-size: 15px;
+  }
+}
+
+/*
+ * Shared dot-grid backdrop used by the hero AND the major sections inside the
+ * scaled canvas (process, testimonials, team, FAQ). Tunable via two CSS
+ * custom properties so callers can override per-section if needed.
+ */
+:root {
+  --pattern-dot-color: rgba(146, 102, 235, 0.32);
+  --pattern-dot-color-hover: rgba(196, 173, 255, 0.85);
+  --pattern-dot-size: 1.6px;
+  --pattern-dot-edge: 2.4px;
+  --pattern-cell: 56px;
+}
+
+.landing-hero .hero-pattern {
+  background-image: radial-gradient(
+    circle at center,
+    var(--pattern-dot-color) var(--pattern-dot-size),
+    transparent var(--pattern-dot-edge)
+  );
+  background-size: var(--pattern-cell) var(--pattern-cell);
+  background-position: 0 0;
+  opacity: 0.85;
+  animation: heroPatternDrift 28s ease-in-out infinite;
+  will-change: background-position;
+}
+
+/*
+ * Hover spotlight: a brighter copy of the dot grid masked to a soft circle
+ * that follows the cursor (--hero-mx / --hero-my). The mask is anchored
+ * far off-screen by default so the overlay is invisible until the user
+ * actually moves over the hero.
+ */
+.landing-hero .hero-pattern-hover {
+  background-image: radial-gradient(
+    circle at center,
+    var(--pattern-dot-color-hover) var(--pattern-dot-size),
+    transparent var(--pattern-dot-edge)
+  );
+  background-size: var(--pattern-cell) var(--pattern-cell);
+  background-position: 0 0;
+  -webkit-mask-image: radial-gradient(
+    220px circle at var(--hero-mx, -300px) var(--hero-my, -300px),
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0.6) 45%,
+    rgba(0, 0, 0, 0) 75%
+  );
+  mask-image: radial-gradient(
+    220px circle at var(--hero-mx, -300px) var(--hero-my, -300px),
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0.6) 45%,
+    rgba(0, 0, 0, 0) 75%
+  );
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  transition: opacity 220ms ease;
+  opacity: 0;
+}
+
+.landing-hero:hover .hero-pattern-hover {
+  opacity: 1;
+}
+
+/*
+ * Same dot grid behind the major scrolled sections. We attach it as a
+ * pseudo-element on each section wrapper so the section's own content stays
+ * untouched and on top of the pattern. Each pattern uses a smaller, softer
+ * cell so it reads as ambient texture (no hover overlay here — the hero is
+ * the only interactive surface).
+ */
+.landing-process-section [data-name="Process Section v2"]::before,
+.landing-testimonials-section [data-name="Testimonials Section v1"]::before,
+.landing-team-section [data-name="Team Section"]::before,
+.landing-faq-section [data-name="FAQ Section"]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: radial-gradient(
+    circle at center,
+    var(--pattern-dot-color) var(--pattern-dot-size),
+    transparent var(--pattern-dot-edge)
+  );
+  background-size: var(--pattern-cell) var(--pattern-cell);
+  background-position: 0 0;
+  opacity: 0.55;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 1) 18%,
+    rgba(0, 0, 0, 1) 82%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 1) 18%,
+    rgba(0, 0, 0, 1) 82%,
+    transparent 100%
+  );
+}
+
+/* Push each section's real content above the pattern layer. */
+.landing-process-section [data-name="Process Section v2"] > *,
+.landing-testimonials-section [data-name="Testimonials Section v1"] > *,
+.landing-team-section [data-name="Team Section"] > *,
+.landing-faq-section [data-name="FAQ Section"] > * {
+  position: relative;
+  z-index: 1;
+}
+
+/*
+ * Retire the original Framer Bg's full-canvas radial gradient. After
+ * shrinking the canvas to 4500px the embedded SVG ellipse rendered as an
+ * out-of-place purple blob between Testimonials and Meet the Team — the
+ * dot grid now provides the ambient depth.
+ */
+.landing-root [data-name="BG"] {
+  display: none !important;
+}
+
+.landing-hero .hero-vignette {
+  background:
+    radial-gradient(
+      45% 38% at 50% 42%,
+      rgba(97, 29, 205, 0.045),
+      rgba(10, 10, 12, 0) 72%
+    ),
+    radial-gradient(
+      120% 80% at 50% 100%,
+      rgba(10, 10, 12, 0.55),
+      rgba(10, 10, 12, 0) 55%
+    );
+}
+
+@keyframes heroPatternDrift {
+  0% { background-position: 0 0; }
+  50% { background-position: 6px 8px; }
+  100% { background-position: 0 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-hero .hero-pattern { animation: none; }
+}
+
+/* Ticker */
+.hero-ticker {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    #000 8%,
+    #000 92%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    #000 8%,
+    #000 92%,
+    transparent 100%
+  );
+}
+
+.hero-ticker-track {
+  width: max-content;
+  animation: heroTickerScroll 40s linear infinite;
+}
+
+.hero-ticker-logo {
+  filter: brightness(0) invert(1);
+}
+
+@keyframes heroTickerScroll {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-ticker-track { animation: none; }
+}
+
+/* ------------------------------------------------------------------ */
+/* Block rhythm                                                        */
+/* ------------------------------------------------------------------ */
+
+/*
+ * The Framer export pins every section to a fixed `top` inside the 1920px
+ * canvas with each section authored at h-[1200px]. The 1200px slot is much
+ * taller than each section's intrinsic content, which leaves big, uneven
+ * gaps between blocks (most visibly between "Hear From Our Users" and
+ * "Meet the Team"). We override each section's `top` and `height` here so
+ * blocks stack flush with consistent breathing room.
+ *
+ * Keep these values in lockstep with `LANDING_BLOCK_HEIGHTS` /
+ * `LANDING_BLOCK_TOPS` in `LandingBlocks.tsx`.
+ */
+
+.landing-platform-section [data-name="Platform Section"] {
+  position: relative !important;
+  height: 1100px !important;
+}
+
+.landing-process-section [data-name="Process Section v2"] {
+  top: 1100px !important;
+  height: 880px !important;
+  justify-content: center !important;
+}
+
+.landing-testimonials-section [data-name="Testimonials Section v1"] {
+  top: 1980px !important;
+  height: 880px !important;
+  justify-content: flex-start !important;
+  padding-top: 160px !important;
+}
+
+.landing-team-section [data-name="Team Section"] {
+  top: 2860px !important;
+  height: 880px !important;
+  justify-content: center !important;
+}
+
+.landing-faq-section [data-name="FAQ Section"] {
+  top: 3740px !important;
+  height: 880px !important;
+  justify-content: center !important;
+}
+
+/* ------------------------------------------------------------------ */
+/* Platform section                                                    */
+/* ------------------------------------------------------------------ */
+
+.landing-platform-section [data-name="h3.framer-text"] p {
+  font-size: 42px !important;
+  line-height: 1.15 !important;
+  letter-spacing: -0.012em !important;
+  font-family: var(--font-display) !important;
+  font-weight: 400 !important;
+}
+
+.landing-platform-section [data-name="Left"] {
+  height: auto !important;
+  align-items: flex-start !important;
+  overflow: visible !important;
+}
+
+.landing-platform-section [data-name="Right"] {
+  gap: 22px !important;
+}
+
+.landing-platform-section [data-name="Right"] [data-name="p.framer-text"],
+.landing-platform-section [data-name="Right"] [data-name="p.framer-text"] p {
+  white-space: normal !important;
+}
+
+.landing-platform-section [data-name="Right"] [data-name="p.framer-text"] p {
+  font-size: 24px !important;
+  line-height: 1.4 !important;
+  letter-spacing: -0.005em !important;
+}
+
+.landing-platform-section [data-name="Right"] [data-name="div.framer-1p4duwb"] {
+  width: 100% !important;
+}
+
+.landing-platform-section [data-name="Right"] [data-name="div.framer-1g4pmvv-container"] {
+  display: none !important;
+}
+
+/* The rotating BG oval ring is enhanced with a continuous GSAP spin (see
+   LandingPage.tsx).  It already has a static 39.77deg rotation from the
+   exported markup; we set transform-origin and will-change here so the
+   GSAP-driven rotation looks centered and stays GPU-accelerated. */
+.landing-platform-section .platform-oval-spin {
+  transform-origin: center center;
+  will-change: transform;
+}
+
+/* ------------------------------------------------------------------ */
+/* Process tabs                                                        */
+/* ------------------------------------------------------------------ */
+
+.process-desc-legacy-hidden {
+  display: none !important;
+}
+
+/* Process section ("How WorkApply works")
+   Both this section and the Platform/Featured section live inside the same
+   1920px scaled canvas, so we size them with matching source values to keep
+   their visual scale consistent.  Reference values:
+     - Featured H3 ("We're building...")  : 42px
+     - Featured body  ("We get to know...") : 24px
+   The Hero lives outside the canvas at 1:1, so its absolute sizes are larger.
+*/
+
+.landing-process-section [data-name="h1.framer-text"] p,
+.landing-process-section [data-name="h1.framer-text"] div {
+  font-size: 60px !important;
+  line-height: 1.1 !important;
+  letter-spacing: -0.012em !important;
+}
+
+.landing-process-section [data-name="Steps"] p {
+  font-size: 26px !important;
+  line-height: 1.25 !important;
+  letter-spacing: -0.005em !important;
+  text-align: center !important;
+  width: 100% !important;
+}
+
+.landing-process-section [data-name="Steps"] {
+  gap: 28px !important;
+}
+
+/* Tab label container — Framer sets a fixed pixel width that no longer fits
+   the larger font size; let it size to its content and center its children
+   so the text + underline below it line up. */
+.landing-process-section [data-name="Steps"] [data-name="div.framer-1p4jwlc"] {
+  width: auto !important;
+  align-items: center !important;
+}
+
+.landing-process-section [data-name="Steps"] [data-name="div.framer-1p4jwlc"] [data-name="p.framer-text"] {
+  align-items: center !important;
+}
+
+.landing-process-section [data-name="Steps"] [data-name="Text"] {
+  width: auto !important;
+}
+
+.landing-process-section [data-name="Steps"] [data-name="Active"],
+.landing-process-section [data-name="Steps"] [data-name="Inactive"] {
+  align-items: stretch !important;
+}
+
+.landing-root .process-tab-panel {
+  box-sizing: border-box;
+  margin: 0 auto;
+  max-width: 1510px;
+  padding: 8px 32px 0;
+  text-align: center;
+  width: 100%;
+}
+
+.landing-root .process-tab-panel .process-tab-line1 {
+  color: rgba(250, 249, 246, 0.95);
+  font-family: var(--font-display) !important;
+  font-size: 32px;
+  font-weight: 400;
+  letter-spacing: -0.005em;
+  line-height: 1.35;
+  margin: 0 auto;
+  max-width: 64rem;
+}
+
+.landing-root .process-tab-panel .process-tab-line2 {
+  color: rgba(250, 249, 246, 0.72);
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: -0.005em;
+  margin: 16px auto 0;
+  max-width: 56rem;
+}
+
+/* ------------------------------------------------------------------ */
+/* Mobile / tablet (< 1024 px): unscaled, naturally-flowing layout     */
+/* ------------------------------------------------------------------ */
+
+/*
+ * The Framer-exported sections were authored for a 1920-wide canvas that's
+ * downscaled with `transform: scale()` on desktop. At narrow viewports that
+ * approach is unworkable: even with the canvas wrapper bypassed, the section
+ * "Platform/Process/Team/FAQ Section" boxes ship with `position: absolute`,
+ * `top: [N]px`, fixed `h-[1200px]`, and `w-[1728px]` content frames that fight
+ * any responsive override.
+ *
+ * To keep specificity reliably winning over the hard-coded Framer Tailwind
+ * utility classes (and the desktop overrides that ALSO use !important), every
+ * mobile rule is scoped under `[data-mobile-flow="true"]`. LandingPage.tsx
+ * sets that attribute on `<main>` whenever the viewport is below 1024 px and
+ * also skips the canvas-scaling wrapper entirely so sections are direct flow
+ * children of `<main>`.
+ *
+ * Each rule below uses `.landing-root[data-mobile-flow="true"]` (specificity
+ * 0,2,0 — same as the desktop overrides) but sits AFTER the desktop block in
+ * source order so the cascade resolves in our favour without needing extra
+ * selector layers.
+ */
+/* ---- LandingBlocks root: drop the inline canvas height ---- */
+.landing-root[data-mobile-flow="true"] .landing-blocks-root,
+.landing-root[data-mobile-flow="true"] [data-name="End of bodyStart"] {
+  height: auto !important;
+  min-height: 0 !important;
+  width: 100% !important;
+  overflow-x: clip !important;
+}
+
+/*
+ * Clip horizontal overflow at the mobile blocks wrapper so any rogue wide
+ * Framer element can't create a horizontal scrollbar on the page.
+ */
+.landing-root[data-mobile-flow="true"] .landing-mobile-blocks {
+  overflow-x: clip;
+  width: 100%;
+}
+/* TEMP DEBUG: visible marker to confirm attribute selector matches. */
+.landing-root[data-mobile-flow="true"]::before {
+  content: "MOBILE-FLOW-ACTIVE";
+  position: fixed;
+  top: 70px;
+  right: 4px;
+  z-index: 999;
+  background: lime;
+  color: black;
+  font: 10px monospace;
+  padding: 2px 4px;
+}
+
+/* ---- Section wrapper divs (".landing-*-section") ---- */
+.landing-root[data-mobile-flow="true"] .landing-platform-section,
+.landing-root[data-mobile-flow="true"] .landing-process-section,
+.landing-root[data-mobile-flow="true"] .landing-testimonials-section,
+.landing-root[data-mobile-flow="true"] .landing-team-section,
+.landing-root[data-mobile-flow="true"] .landing-faq-section {
+  position: relative !important;
+  inset: auto !important;
+  width: 100% !important;
+  height: auto !important;
+  display: block !important;
+}
+
+/* ---- Section root (the Framer "* Section" boxes) — full-width, flow ---- */
+.landing-root[data-mobile-flow="true"] [data-name="Platform Section"],
+.landing-root[data-mobile-flow="true"] [data-name="Process Section v2"],
+.landing-root[data-mobile-flow="true"] [data-name="Testimonials Section v1"],
+.landing-root[data-mobile-flow="true"] [data-name="Team Section"],
+.landing-root[data-mobile-flow="true"] [data-name="FAQ Section"] {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  padding: 72px 20px !important;
+  box-sizing: border-box !important;
+  overflow: visible !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  background: transparent !important;
+}
+
+/* ---- Generic `Content` wrappers — full-width vertical column ---- */
+.landing-root[data-mobile-flow="true"] [data-name="Platform Section"] [data-name="Content"],
+.landing-root[data-mobile-flow="true"] [data-name="Process Section v2"] [data-name="Content"],
+.landing-root[data-mobile-flow="true"] [data-name="Testimonials Section v1"] [data-name="Content"],
+.landing-root[data-mobile-flow="true"] [data-name="Team Section"] [data-name="Content"],
+.landing-root[data-mobile-flow="true"] [data-name="FAQ Section"] [data-name="Content"] {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  height: auto !important;
+  flex-direction: column !important;
+  gap: 28px !important;
+  padding: 0 !important;
+  overflow: visible !important;
+}
+
+/* ---- Platform section ---- */
+.landing-root[data-mobile-flow="true"] .landing-platform-section [data-name="Content"] {
+  flex-direction: column !important;
+  gap: 24px !important;
+}
+.landing-root[data-mobile-flow="true"] .landing-platform-section [data-name="Left"],
+.landing-root[data-mobile-flow="true"] .landing-platform-section [data-name="Right"] {
+  width: 100% !important;
+  height: auto !important;
+  min-width: 0 !important;
+  align-items: flex-start !important;
+  text-align: left !important;
+  overflow: visible !important;
+}
+.landing-root[data-mobile-flow="true"] .landing-platform-section [data-name="h3.framer-text"] p {
+  font-size: 28px !important;
+  line-height: 1.2 !important;
+  text-align: left !important;
+  white-space: normal !important;
+}
+.landing-root[data-mobile-flow="true"] .landing-platform-section [data-name="Right"] [data-name="p.framer-text"] p {
+  font-size: 16px !important;
+  line-height: 1.5 !important;
+  text-align: left !important;
+  white-space: normal !important;
+}
+.landing-root[data-mobile-flow="true"] .landing-platform-section [data-name="Right"] [data-name="p.framer-text"] > div {
+  white-space: normal !important;
+}
+/* The decorative rotating oval ring is positioned for the 1920 canvas
+   (1370×1369 absolute box). Hide it and its unnamed wrapper. */
+.landing-root[data-mobile-flow="true"] .landing-platform-section [data-name="Oval"],
+.landing-root[data-mobile-flow="true"] .landing-platform-section [data-name="Platform Section"] > div:not([data-name]) {
+  display: none !important;
+}
+/*
+ * Platform UI screenshot — fluid width, proper height.
+ * The original Platform element is position:absolute flex-col 865×492.89px.
+ * Its only flex child uses flex:1 0 0 / min-h:1px, which collapses the height
+ * to 1px when we set height:auto on the parent.  Fix: switch to display:block
+ * so aspect-ratio drives the height, then patch the inner wrapper to fill it.
+ */
+.landing-root[data-mobile-flow="true"] .landing-platform-section [data-name="platform"] {
+  display: block !important;
+  position: relative !important;
+  transform: none !important;
+  left: auto !important;
+  top: auto !important;
+  width: 100% !important;
+  max-width: 520px !important;
+  height: auto !important;
+  aspect-ratio: 865 / 492.89 !important;
+  margin: 16px auto !important;
+  overflow: hidden !important;
+}
+/* The image wrapper uses flex:1 — make it fill the block parent absolutely. */
+.landing-root[data-mobile-flow="true"] .landing-platform-section [data-name="platform"] > div {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  flex: none !important;
+  min-height: 0 !important;
+}
+
+/* ---- Process section ---- */
+.landing-root[data-mobile-flow="true"] .landing-process-section [data-name="h1.framer-text"] p,
+.landing-root[data-mobile-flow="true"] .landing-process-section [data-name="h1.framer-text"] div {
+  font-size: 32px !important;
+  line-height: 1.15 !important;
+}
+.landing-root[data-mobile-flow="true"] .landing-process-section [data-name="Title"] {
+  padding-top: 0 !important;
+  width: 100% !important;
+  overflow: visible !important;
+}
+.landing-root[data-mobile-flow="true"] .landing-process-section [data-name="Process Steps"],
+.landing-root[data-mobile-flow="true"] .landing-process-section [data-name="div.framer-og5f3o-container"],
+.landing-root[data-mobile-flow="true"] .landing-process-section [data-name="Onboarding"] {
+  width: 100% !important;
+  min-width: 0 !important;
+}
+.landing-root[data-mobile-flow="true"] .landing-process-section [data-name="Steps"] {
+  flex-wrap: wrap !important;
+  gap: 8px 14px !important;
+  width: 100% !important;
+  justify-content: flex-start !important;
+}
+.landing-root[data-mobile-flow="true"] .landing-process-section [data-name="Steps"] p {
+  font-size: 13px !important;
+  line-height: 1.25 !important;
+  text-align: left !important;
+  white-space: nowrap !important;
+}
+.landing-root[data-mobile-flow="true"] .process-tab-panel {
+  max-width: 100% !important;
+  padding: 12px 0 0 !important;
+}
+.landing-root[data-mobile-flow="true"] .process-tab-panel .process-tab-line1 {
+  font-size: 17px !important;
+  line-height: 1.45 !important;
+  max-width: 100% !important;
+  padding: 0 !important;
+  text-align: left !important;
+}
+.landing-root[data-mobile-flow="true"] .process-tab-panel .process-tab-line2 {
+  font-size: 14px !important;
+  line-height: 1.55 !important;
+  max-width: 100% !important;
+  padding: 0 !important;
+  margin-top: 10px !important;
+  text-align: left !important;
+}
+/* Onboarding screenshot — fluid width. */
+.landing-root[data-mobile-flow="true"] .landing-process-section [data-name="Image"] {
+  width: 100% !important;
+  max-width: 520px !important;
+  height: auto !important;
+  aspect-ratio: 817 / 460;
+  margin: 8px auto 0 !important;
+}
+.landing-root[data-mobile-flow="true"] .landing-process-section [data-name="Image:shadow"] {
+  height: 100% !important;
+  transform: none !important;
+  top: 0 !important;
+}
+/* Hide the legacy process description block — replaced by .process-tab-panel. */
+.landing-root[data-mobile-flow="true"] .landing-process-section [data-name="div.framer-i095ma:align-stretch"] {
+  display: none !important;
+}
+
+/* ---- Testimonials section ---- */
+.landing-root[data-mobile-flow="true"] .landing-testimonials-section [data-name="h1.framer-text"] p {
+  font-size: 28px !important;
+  line-height: 1.15 !important;
+}
+.landing-root[data-mobile-flow="true"] .landing-testimonials-section [data-name="Title"] {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  overflow: visible !important;
+  padding-top: 0 !important;
+}
+/*
+ * The Framer slideshow carousel is built with absolute-positioned slides and
+ * a fixed-height clip container (h-[747.75px]).  Override the entire chain
+ * so no fixed heights or overflowing widths escape onto mobile.
+ */
+.landing-root[data-mobile-flow="true"] .landing-testimonials-section [data-name="Slideshow"] {
+  height: auto !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+  width: 100% !important;
+  padding: 24px 0 0 !important;
+}
+/* DivFramerKtqq0VContainer: w-[1209.59px] */
+.landing-root[data-mobile-flow="true"] .landing-testimonials-section [data-name="div.framer-ktqq0v-container"] {
+  width: 100% !important;
+  min-width: 0 !important;
+  flex: 1 1 auto !important;
+}
+/* section inside the container */
+.landing-root[data-mobile-flow="true"] .landing-testimonials-section [data-name="section"] {
+  width: 100% !important;
+  min-width: 0 !important;
+  flex: 1 1 auto !important;
+}
+/* Div3: h-[747.75px] overflow-clip — collapse and reveal */
+.landing-root[data-mobile-flow="true"] .landing-testimonials-section [data-name="Slideshow"] [data-name="div"] {
+  height: auto !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+  flex: 1 1 auto !important;
+  width: 100% !important;
+}
+/* Ul1: absolute inset-[-2274px...] — reset to normal flow */
+.landing-root[data-mobile-flow="true"] .landing-testimonials-section [data-name="ul"] {
+  position: relative !important;
+  inset: auto !important;
+  padding-top: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0 !important;
+  width: 100% !important;
+}
+/* Individual testimonial cards: w-[1209.59px] py-[247.08px] */
+.landing-root[data-mobile-flow="true"] .landing-testimonials-section [data-name="Testimonial"] {
+  width: 100% !important;
+  min-width: 0 !important;
+  padding: 24px 0 !important;
+  overflow: visible !important;
+}
+.landing-root[data-mobile-flow="true"] .landing-testimonials-section [data-name="p.framer-text"] p {
+  font-size: 18px !important;
+  line-height: 1.45 !important;
+  white-space: normal !important;
+  text-align: left !important;
+}
+.landing-root[data-mobile-flow="true"] .landing-testimonials-section [data-name="h3.framer-text"] p {
+  font-size: 16px !important;
+  line-height: 1.3 !important;
+  white-space: normal !important;
+}
+
+/* ---- Team section ---- */
+.landing-root[data-mobile-flow="true"] .landing-team-section [data-name="h1.framer-text"] p {
+  font-size: 28px !important;
+  line-height: 1.15 !important;
+}
+.landing-root[data-mobile-flow="true"] .landing-team-section [data-name="Title"] {
+  width: 100% !important;
+  overflow: visible !important;
+}
+.landing-root[data-mobile-flow="true"] .landing-team-section [data-name="Content"] {
+  overflow: visible !important;
+}
+.landing-root[data-mobile-flow="true"] .landing-team-section [data-name="Photos"] {
+  flex-wrap: wrap !important;
+  gap: 14px !important;
+  width: 100% !important;
+  justify-content: center !important;
+  align-items: stretch !important;
+  overflow: visible !important;
+  height: auto !important;
+}
+/* Each card column wrapper — 2-up grid. */
+.landing-root[data-mobile-flow="true"] .landing-team-section [data-name="div.framer-xnl4kz"],
+.landing-root[data-mobile-flow="true"] .landing-team-section [data-name="div.framer-bnjyml"],
+.landing-root[data-mobile-flow="true"] .landing-team-section [data-name="div.framer-zjnwl1"],
+.landing-root[data-mobile-flow="true"] .landing-team-section [data-name="div.framer-1oac5zc"] {
+  flex: 0 1 calc(50% - 7px) !important;
+  width: calc(50% - 7px) !important;
+  min-width: 0 !important;
+  max-width: 240px !important;
+  height: auto !important;
+  padding-top: 0 !important;
+  overflow: visible !important;
+}
+.landing-root[data-mobile-flow="true"] .landing-team-section [data-name="div.framer-1jeaf98-container"],
+.landing-root[data-mobile-flow="true"] .landing-team-section [data-name="div.framer-1h54r71-container"] {
+  width: 100% !important;
+  overflow: visible !important;
+}
+.landing-root[data-mobile-flow="true"] .landing-team-section [data-name="Variant 1"] {
+  width: 100% !important;
+  aspect-ratio: 282 / 380 !important;
+  height: auto !important;
+  padding: 0 10px 10px !important;
+  background-size: cover !important;
+  background-position: center top !important;
+  overflow: hidden !important;
+}
+.landing-root[data-mobile-flow="true"] .landing-team-section [data-name="Variant 1"] > div:first-child img {
+  object-fit: cover !important;
+}
+.landing-root[data-mobile-flow="true"] .landing-team-section [data-name="Variant 1"] [data-name="Name Card"] {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+.landing-root[data-mobile-flow="true"] .landing-team-section [data-name="Variant 1"] [data-name="div.framer-62tucq"] p {
+  font-size: 13px !important;
+  line-height: 1.2 !important;
+}
+.landing-root[data-mobile-flow="true"] .landing-team-section [data-name="Variant 1"] [data-name="div.framer-163a0wm"] p {
+  font-size: 10px !important;
+  line-height: 1.2 !important;
+}
+/* Name Card hover lift is jarring on touch — disable. */
+.landing-root[data-mobile-flow="true"] .landing-team-section [data-name="Variant 1"].team-card-runtime:hover {
+  transform: none !important;
+  filter: none !important;
+}
+.landing-root[data-mobile-flow="true"] .landing-team-section [data-name="Variant 1"].team-card-runtime:hover [data-name="Name Card"] {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* ---- FAQ section ---- */
+.landing-root[data-mobile-flow="true"] .landing-faq-section [data-name="h1.framer-text"] p {
+  font-size: 28px !important;
+  line-height: 1.15 !important;
+}
+.landing-root[data-mobile-flow="true"] .landing-faq-section [data-name="Title"] {
+  padding: 0 !important;
+  width: 100% !important;
+  overflow: visible !important;
+}
+/*
+ * Questions wrapper + all row containers ship at w-[1728px] — collapse all.
+ * Also release overflow-clip so question text doesn't vanish.
+ */
+.landing-root[data-mobile-flow="true"] .landing-faq-section [data-name="Questions"],
+.landing-root[data-mobile-flow="true"] .landing-faq-section [data-name="div.framer-qb0fea-container"],
+.landing-root[data-mobile-flow="true"] .landing-faq-section [data-name="div.framer-pszw7x-container"],
+.landing-root[data-mobile-flow="true"] .landing-faq-section [data-name="div.framer-a9hdpk-container"],
+.landing-root[data-mobile-flow="true"] .landing-faq-section [data-name="div.framer-1bub2nd-container"] {
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  overflow: visible !important;
+  box-sizing: border-box !important;
+}
+.landing-root[data-mobile-flow="true"] .landing-faq-section [data-name="h3.framer-text"] p {
+  font-size: 16px !important;
+  line-height: 1.35 !important;
+  white-space: normal !important;
+}
+.landing-root[data-mobile-flow="true"] .landing-faq-section [data-name="h3.framer-text"] {
+  height: auto !important;
+  width: 100% !important;
+  overflow: visible !important;
+}
+/* Inner div (whitespace-nowrap) — allow wrapping. */
+.landing-root[data-mobile-flow="true"] .landing-faq-section [data-name="h3.framer-text"] > div {
+  white-space: normal !important;
+  width: 100% !important;
+  flex-shrink: 1 !important;
+}
+/*
+ * The question text container: Framer centres it on a 1920px canvas with
+ * -translate-x-1/2 + left:calc(50%-17px).  The inner div has min-w:[1694px].
+ * Override: position it flush-left with an explicit width so child `100%`
+ * resolves correctly (width:auto on abs-pos with left+right set = right-left).
+ */
+.landing-root[data-mobile-flow="true"] .landing-faq-section [data-name="Closed"] [data-name="Content"] {
+  position: absolute !important;
+  top: 18px !important;
+  left: 16px !important;
+  right: 48px !important;
+  width: auto !important;
+  transform: none !important;
+  padding: 0 !important;
+  justify-content: flex-start !important;
+  overflow: visible !important;
+}
+/* The 1694px wide container inside Content — collapse to parent width. */
+.landing-root[data-mobile-flow="true"] .landing-faq-section [data-name="div.framer-1ostq1n"] {
+  min-width: 0 !important;
+  width: 100% !important;
+  overflow: visible !important;
+}
+/* Chevron: pin to right edge of the row. */
+.landing-root[data-mobile-flow="true"] .landing-faq-section [data-name="div.framer-xBuWg:mask-group"] {
+  left: auto !important;
+  right: 14px !important;
+  top: 20px !important;
+  transform: rotate(0deg) !important;
+}
+.landing-root[data-mobile-flow="true"]
+  .landing-faq-section
+  [data-name="Closed"].faq-open
+  [data-name="div.framer-xBuWg:mask-group"] {
+  transform: rotate(180deg) !important;
+}
+/* Row sizing — allow rows to be as tall as needed for multi-line questions. */
+.landing-root[data-mobile-flow="true"] .landing-faq-section [data-name="Closed"].faq-row-runtime {
+  min-height: 58px !important;
+  max-height: 58px !important;
+  width: 100% !important;
+  overflow: hidden !important;
+}
+.landing-root[data-mobile-flow="true"] .landing-faq-section [data-name="Closed"].faq-row-runtime.faq-open {
+  max-height: 520px !important;
+}
+.landing-root[data-mobile-flow="true"] .landing-faq-section .faq-answer-runtime {
+  font-size: 14px !important;
+  line-height: 1.55 !important;
+  padding: 64px 36px 16px 16px !important;
+}
+/* Make the border separator full-width. */
+.landing-root[data-mobile-flow="true"] .landing-faq-section [data-name="Closed"] [data-name="::after"] {
+  width: 100% !important;
+}
+
+/* ≤ 639 px (phones): tighter padding. */
+@media (max-width: 639.98px) {
+  .landing-root[data-mobile-flow="true"] [data-name="Platform Section"],
+  .landing-root[data-mobile-flow="true"] [data-name="Process Section v2"],
+  .landing-root[data-mobile-flow="true"] [data-name="Testimonials Section v1"],
+  .landing-root[data-mobile-flow="true"] [data-name="Team Section"],
+  .landing-root[data-mobile-flow="true"] [data-name="FAQ Section"] {
+    padding: 56px 16px !important;
+  }
+  .landing-root[data-mobile-flow="true"] .landing-process-section [data-name="h1.framer-text"] p,
+  .landing-root[data-mobile-flow="true"] .landing-process-section [data-name="h1.framer-text"] div,
+  .landing-root[data-mobile-flow="true"] .landing-platform-section [data-name="h3.framer-text"] p,
+  .landing-root[data-mobile-flow="true"] .landing-testimonials-section [data-name="h1.framer-text"] p,
+  .landing-root[data-mobile-flow="true"] .landing-team-section [data-name="h1.framer-text"] p,
+  .landing-root[data-mobile-flow="true"] .landing-faq-section [data-name="h1.framer-text"] p {
+    font-size: 24px !important;
+  }
+  .landing-root[data-mobile-flow="true"] .landing-team-section [data-name="div.framer-xnl4kz"],
+  .landing-root[data-mobile-flow="true"] .landing-team-section [data-name="div.framer-bnjyml"],
+  .landing-root[data-mobile-flow="true"] .landing-team-section [data-name="div.framer-zjnwl1"],
+  .landing-root[data-mobile-flow="true"] .landing-team-section [data-name="div.framer-1oac5zc"] {
+    flex: 0 1 calc(50% - 6px) !important;
+    width: calc(50% - 6px) !important;
+    max-width: 200px !important;
+  }
+  /*
+   * Phones: multi-line question text wraps to ~3 lines.  The longest FAQ
+   * question ("Why do you use human recruiters...") needs ~83 px at 16 px
+   * font on a 375 px screen.  Set closed max-height to 96 px (comfortable
+   * 3-line budget) and push the answer padding-top past 96 px so it stays
+   * hidden while the row is closed.
+   */
+  .landing-root[data-mobile-flow="true"] .landing-faq-section [data-name="Closed"].faq-row-runtime {
+    min-height: 58px !important;
+    max-height: 96px !important;
+  }
+  .landing-root[data-mobile-flow="true"] .landing-faq-section [data-name="Closed"].faq-row-runtime.faq-open {
+    max-height: 640px !important;
+  }
+  .landing-root[data-mobile-flow="true"] .landing-faq-section .faq-answer-runtime {
+    padding-top: 104px !important;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* FAQ accordions                                                      */
+/* ------------------------------------------------------------------ */
+
+/*
+ * The Framer export gives every "Closed" row a fixed `h-[58.59px]` and
+ * `overflow-clip`, plus its question text and chevron are absolutely
+ * positioned. We override those constraints so the row can grow when
+ * opened and the answer paragraph we inject lands below the question.
+ */
+.landing-root .landing-faq-section [data-name="Closed"].faq-row-runtime {
+  height: auto !important;
+  min-height: 58.59px;
+  max-height: 58.59px;
+  overflow: hidden !important;
+  position: relative;
+  transition: max-height 380ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.landing-root .landing-faq-section [data-name="Closed"].faq-row-runtime.faq-open {
+  max-height: 360px;
+}
+
+.landing-root .landing-faq-section .faq-answer-runtime {
+  box-sizing: border-box;
+  color: rgba(250, 249, 246, 0.78);
+  font-family: var(--font-display);
+  font-size: 22px;
+  line-height: 1.55;
+  margin: 0;
+  /* Top padding clears the absolutely-positioned question (top:24px + ~34px line-height). */
+  padding: 72px 96px 26px 22px;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition:
+    opacity 220ms ease 80ms,
+    transform 260ms cubic-bezier(0.22, 1, 0.36, 1) 80ms;
+}
+
+.landing-root .landing-faq-section [data-name="Closed"].faq-open .faq-answer-runtime {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Animate the +/× chevron via the open class so we keep the original
+   translate(-50%) and only compose a rotation on top of it. */
+.landing-root .landing-faq-section [data-name="div.framer-xBuWg:mask-group"] {
+  transform: translateX(-50%) rotate(0deg) !important;
+  transform-origin: center;
+  transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.landing-root
+  .landing-faq-section
+  [data-name="Closed"].faq-open
+  [data-name="div.framer-xBuWg:mask-group"] {
+  transform: translateX(-50%) rotate(180deg) !important;
+}
+
+/* ------------------------------------------------------------------ */
+/* Team cards (yellow Name Card hover)                                 */
+/* ------------------------------------------------------------------ */
+
+/*
+ * The Framer export pins each Name Card at `max-h-[91px]` with overflow-clip,
+ * AND wraps each card in a parent (div.framer-xnl4kz / bnjyml / zjnwl1 /
+ * 1oac5zc) with its own `overflow-clip`. Both clip the social icon row when
+ * we add the Email icon next to LinkedIn. We release the height cap on the
+ * Name Card (keeping its overflow:hidden so the shimmer overlay stays inside)
+ * and release the parent's clip so the taller card isn't cut off.
+ */
+.landing-team-section [data-name="Variant 1"] [data-name="Name Card"] {
+  max-height: none !important;
+  height: auto !important;
+}
+
+.landing-team-section [data-name="Variant 1"] [data-name="Text"] {
+  overflow: visible !important;
+}
+
+.landing-team-section [data-name="Variant 1"] [data-name="Logos"] {
+  gap: 8px !important;
+  margin-top: 6px !important;
+}
+
+.landing-team-section [data-name="div.framer-xnl4kz"],
+.landing-team-section [data-name="div.framer-bnjyml"],
+.landing-team-section [data-name="div.framer-zjnwl1"],
+.landing-team-section [data-name="div.framer-1oac5zc"] {
+  overflow: visible !important;
+}
+
+.landing-team-section [data-name="Variant 1"].team-card-runtime {
+  transition:
+    transform 360ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 360ms ease;
+  will-change: transform;
+}
+
+.landing-team-section [data-name="Variant 1"].team-card-runtime:hover {
+  transform: translateY(-6px);
+  filter: drop-shadow(0 24px 38px rgba(0, 0, 0, 0.45));
+}
+
+/* The yellow note card itself: prep transform + shimmer overlay. */
+.landing-team-section [data-name="Variant 1"].team-card-runtime [data-name="Name Card"] {
+  position: relative;
+  overflow: hidden;
+  transform-origin: 0% 100%;
+  transition:
+    transform 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 420ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.landing-team-section [data-name="Variant 1"].team-card-runtime [data-name="Name Card"]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.55) 50%,
+    transparent 70%
+  );
+  transform: translateX(-110%);
+  transition: transform 0s 0s;
+}
+
+.landing-team-section [data-name="Variant 1"].team-card-runtime:hover [data-name="Name Card"] {
+  transform: rotate(-1.4deg) scale(1.04);
+  box-shadow:
+    0 12px 28px -8px rgba(0, 0, 0, 0.45),
+    0 2px 0 0 rgba(0, 0, 0, 0.85);
+}
+
+.landing-team-section [data-name="Variant 1"].team-card-runtime:hover [data-name="Name Card"]::before {
+  transform: translateX(110%);
+  transition: transform 720ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Cloned email icon — match the linkedin icon's sizing. */
+.landing-team-section [data-name="Logos"] .team-email-icon-clone {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-team-section [data-name="Variant 1"].team-card-runtime,
+  .landing-team-section [data-name="Variant 1"].team-card-runtime [data-name="Name Card"],
+  .landing-team-section [data-name="Variant 1"].team-card-runtime [data-name="Name Card"]::before {
+    transition: none !important;
+  }
+  .landing-team-section [data-name="Variant 1"].team-card-runtime:hover {
+    transform: none;
+    filter: none;
+  }
+  .landing-team-section [data-name="Variant 1"].team-card-runtime:hover [data-name="Name Card"] {
+    transform: none;
+  }
+}
+
+/* Allow Pavanam font through to display class */
+.font-display {
+  font-family: var(--font-display);
+}
