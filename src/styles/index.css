@@ -63,7 +63,7 @@ body {
   gap: 48px;
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1024px) {
   .landing-hero .hero-grid {
     flex-direction: row;
     align-items: flex-end;
@@ -576,18 +576,6 @@ body {
   overflow-x: clip;
   width: 100%;
 }
-/* TEMP DEBUG: visible marker to confirm attribute selector matches. */
-.landing-root[data-mobile-flow="true"]::before {
-  content: "MOBILE-FLOW-ACTIVE";
-  position: fixed;
-  top: 70px;
-  right: 4px;
-  z-index: 999;
-  background: lime;
-  color: black;
-  font: 10px monospace;
-  padding: 2px 4px;
-}
 
 /* ---- Section wrapper divs (".landing-*-section") ---- */
 .landing-root[data-mobile-flow="true"] .landing-platform-section,
@@ -734,7 +722,7 @@ body {
   font-size: 13px !important;
   line-height: 1.25 !important;
   text-align: left !important;
-  white-space: nowrap !important;
+  white-space: normal !important;
 }
 .landing-root[data-mobile-flow="true"] .process-tab-panel {
   max-width: 100% !important;
@@ -867,7 +855,7 @@ body {
   overflow: visible !important;
   height: auto !important;
 }
-/* Each card column wrapper — 2-up grid. */
+/* Each card column wrapper — 2-up grid by default, 4-up at tablet. */
 .landing-root[data-mobile-flow="true"] .landing-team-section [data-name="div.framer-xnl4kz"],
 .landing-root[data-mobile-flow="true"] .landing-team-section [data-name="div.framer-bnjyml"],
 .landing-root[data-mobile-flow="true"] .landing-team-section [data-name="div.framer-zjnwl1"],
@@ -879,6 +867,16 @@ body {
   height: auto !important;
   padding-top: 0 !important;
   overflow: visible !important;
+}
+@media (min-width: 768px) {
+  .landing-root[data-mobile-flow="true"] .landing-team-section [data-name="div.framer-xnl4kz"],
+  .landing-root[data-mobile-flow="true"] .landing-team-section [data-name="div.framer-bnjyml"],
+  .landing-root[data-mobile-flow="true"] .landing-team-section [data-name="div.framer-zjnwl1"],
+  .landing-root[data-mobile-flow="true"] .landing-team-section [data-name="div.framer-1oac5zc"] {
+    flex: 0 1 calc(25% - 11px) !important;
+    width: calc(25% - 11px) !important;
+    max-width: 220px !important;
+  }
 }
 .landing-root[data-mobile-flow="true"] .landing-team-section [data-name="div.framer-1jeaf98-container"],
 .landing-root[data-mobile-flow="true"] .landing-team-section [data-name="div.framer-1h54r71-container"] {
@@ -999,7 +997,7 @@ body {
 /* Row sizing — allow rows to be as tall as needed for multi-line questions. */
 .landing-root[data-mobile-flow="true"] .landing-faq-section [data-name="Closed"].faq-row-runtime {
   min-height: 58px !important;
-  max-height: 58px !important;
+  max-height: 78px !important;
   width: 100% !important;
   overflow: hidden !important;
 }
@@ -1009,7 +1007,7 @@ body {
 .landing-root[data-mobile-flow="true"] .landing-faq-section .faq-answer-runtime {
   font-size: 14px !important;
   line-height: 1.55 !important;
-  padding: 64px 36px 16px 16px !important;
+  padding: 84px 36px 16px 16px !important;
 }
 /* Make the border separator full-width. */
 .landing-root[data-mobile-flow="true"] .landing-faq-section [data-name="Closed"] [data-name="::after"] {
