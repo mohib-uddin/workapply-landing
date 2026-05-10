@@ -577,6 +577,23 @@ body {
   width: 100%;
 }
 
+/*
+ * Tailwind v4 generates the `-translate-x-*` utilities via the `translate`
+ * shorthand property, NOT the `transform` property. So `transform: none`
+ * overrides used elsewhere in this file are no-ops for these classes. Wipe
+ * `translate` site-wide inside mobile-flow so the Framer canvas's centering
+ * translates don't push absolute children off-screen at narrow widths.
+ * Specific elements that NEED to keep translating (e.g. the FAQ chevron) are
+ * re-enabled below.
+ */
+.landing-root[data-mobile-flow="true"] [data-name="Process Section v2"] *,
+.landing-root[data-mobile-flow="true"] [data-name="Testimonials Section v1"] *,
+.landing-root[data-mobile-flow="true"] [data-name="Team Section"] *,
+.landing-root[data-mobile-flow="true"] [data-name="FAQ Section"] *,
+.landing-root[data-mobile-flow="true"] [data-name="Platform Section"] * {
+  translate: none !important;
+}
+
 /* ---- Section wrapper divs (".landing-*-section") ---- */
 .landing-root[data-mobile-flow="true"] .landing-platform-section,
 .landing-root[data-mobile-flow="true"] .landing-process-section,
@@ -614,7 +631,13 @@ body {
   background: transparent !important;
 }
 
-/* ---- Generic `Content` wrappers — full-width vertical column ---- */
+/* ---- Generic `Content` wrappers — full-width vertical column ----
+ * Critical: the Framer export gives Process > Content `flex-[1_0_0]` and
+ * Testimonials > Slideshow `basis-0 grow`. With the section parent set to
+ * `height: auto` here, those flex-grow children collapse to 0 height and
+ * their content overflows into the next section. Force `flex: 0 0 auto`
+ * so children size to natural content height instead.
+ */
 .landing-root[data-mobile-flow="true"] [data-name="Platform Section"] [data-name="Content"],
 .landing-root[data-mobile-flow="true"] [data-name="Process Section v2"] [data-name="Content"],
 .landing-root[data-mobile-flow="true"] [data-name="Testimonials Section v1"] [data-name="Content"],
@@ -624,10 +647,14 @@ body {
   max-width: 100% !important;
   min-width: 0 !important;
   height: auto !important;
+  flex: 0 0 auto !important;
   flex-direction: column !important;
   gap: 28px !important;
   padding: 0 !important;
   overflow: visible !important;
+}
+.landing-root[data-mobile-flow="true"] .landing-testimonials-section [data-name="Slideshow"] {
+  flex: 0 0 auto !important;
 }
 
 /* ---- Platform section ---- */
@@ -658,6 +685,16 @@ body {
 }
 .landing-root[data-mobile-flow="true"] .landing-platform-section [data-name="Right"] [data-name="p.framer-text"] > div {
   white-space: normal !important;
+}
+/*
+ * Subtitle Text wrapper hard-codes w-[518.39px]; force fluid width so the
+ * platform paragraph wraps inside the narrower mobile column instead of
+ * stretching the section's width and clipping at the viewport edge.
+ */
+.landing-root[data-mobile-flow="true"] .landing-platform-section [data-name="Subtitle Text"] {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
 }
 /* The decorative rotating oval ring is positioned for the 1920 canvas
    (1370×1369 absolute box). Hide it and its unnamed wrapper. */
@@ -832,6 +869,28 @@ body {
   font-size: 16px !important;
   line-height: 1.3 !important;
   white-space: normal !important;
+}
+/*
+ * The Framer slideshow ships placeholder testimonial cards whose `h1.framer-text`
+ * and `h3.framer-text` boxes are empty `h-[208px]`/`h-[33.59px]` spacers. The
+ * 1920 canvas hides them outside the slideshow viewport; in mobile flow they
+ * appear as huge empty gaps. Collapse empty placeholders entirely.
+ */
+.landing-root[data-mobile-flow="true"] .landing-testimonials-section [data-name="h1.framer-text"]:empty,
+.landing-root[data-mobile-flow="true"] .landing-testimonials-section [data-name="h3.framer-text"]:empty,
+.landing-root[data-mobile-flow="true"] .landing-testimonials-section [data-name="div.framer-1cqt8ow"]:has(> [data-name="h1.framer-text"]:empty),
+.landing-root[data-mobile-flow="true"] .landing-testimonials-section [data-name="div.framer-1bqizcj"]:has(> [data-name="h1.framer-text"]:empty),
+.landing-root[data-mobile-flow="true"] .landing-testimonials-section [data-name="div.framer-s0u12a"]:has(> [data-name="h3.framer-text"]:empty),
+.landing-root[data-mobile-flow="true"] .landing-testimonials-section [data-name="div.framer-1vgs9aw"]:has(> [data-name="h3.framer-text"]:empty) {
+  display: none !important;
+}
+/*
+ * Hide the entire testimonial card if it has no quote content (its quote
+ * wrapper is empty/hidden). Avoids rendering 4 cards when only some have copy.
+ */
+.landing-root[data-mobile-flow="true"] .landing-testimonials-section [data-name="Testimonial"]:has(> [data-name="div.framer-1cqt8ow"]),
+.landing-root[data-mobile-flow="true"] .landing-testimonials-section [data-name="Testimonial"]:has(> [data-name="div.framer-1bqizcj"]) {
+  display: none !important;
 }
 
 /* ---- Team section ---- */
@@ -1035,8 +1094,8 @@ body {
   .landing-root[data-mobile-flow="true"] .landing-team-section [data-name="div.framer-bnjyml"],
   .landing-root[data-mobile-flow="true"] .landing-team-section [data-name="div.framer-zjnwl1"],
   .landing-root[data-mobile-flow="true"] .landing-team-section [data-name="div.framer-1oac5zc"] {
-    flex: 0 1 calc(50% - 6px) !important;
-    width: calc(50% - 6px) !important;
+    flex: 0 1 calc(50% - 8px) !important;
+    width: calc(50% - 8px) !important;
     max-width: 200px !important;
   }
   /*
